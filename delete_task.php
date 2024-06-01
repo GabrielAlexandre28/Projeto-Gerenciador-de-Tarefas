@@ -1,27 +1,27 @@
 <?php
-session_start();
+session_start(); // Inicia a sessão PHP
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+ini_set('display_errors', 1); // Configura o PHP para exibir todos os erros
+error_reporting(E_ALL); // Define o nível de relatório de erro para exibir todos os tipos de erro
 
-include_once 'bd.php';
+include_once 'bd.php'; // Inclui o arquivo com as configurações de conexão com o banco de dados
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id = $_POST['id'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Verifica se a requisição é do tipo POST
+    $id = $_POST['id']; // Recupera o ID enviado via POST
 
-    $stmt = $conn->prepare("DELETE FROM tarefas WHERE id = ?");
-    $stmt->bind_param("i", $id);
-    if ($stmt->execute()) {
+    $stmt = $conn->prepare("DELETE FROM tarefas WHERE id = ?"); // Prepara uma consulta SQL para excluir a tarefa com base no ID
+    $stmt->bind_param("i", $id); // Liga o parâmetro da consulta ao valor da variável $id
+    if ($stmt->execute()) { // Executa a consulta preparada e verifica se foi bem-sucedida
         // Sucesso
-        $stmt->close();
-        $conn->close();
-        header("Location: dashboard.php"); // Ajuste conforme necessário
-        exit();
+        $stmt->close(); // Fecha o statement após a utilização
+        $conn->close(); // Fecha a conexão com o banco de dados após a utilização
+        header("Location: dashboard.php"); // Redireciona para a página de dashboard após a exclusão da tarefa
+        exit(); // Finaliza o script PHP após o redirecionamento
     } else {
-        echo "Erro ao excluir: " . $stmt->error;
+        echo "Erro ao excluir: " . $stmt->error; // Se houver erro na execução da consulta, exibe a mensagem de erro
     }
 } else {
     // Não é POST
-    echo "Método de requisição inválido.";
+    echo "Método de requisição inválido."; // Se a requisição não for do tipo POST, exibe uma mensagem de erro
 }
 ?>

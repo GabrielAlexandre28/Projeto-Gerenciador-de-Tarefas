@@ -93,7 +93,7 @@ $conn->close(); // Fecha a conexão com o banco de dados.
                             <button type="submit" class="btn btn-primary btn-block">Registrar</button> <!-- Botão de submissão do formulário -->
                         </form> <!-- Fechamento do formulário -->
                         <div class="text-center mt-3"> <!-- Div de texto centralizado com margem superior -->
-                            <a href="index.php" class="btn btn-link">Voltar para a Página de Login</a> <!-- Link para voltar à página de login -->
+                            <a href="login.php" class="btn btn-link">Voltar para a Página de Login</a> <!-- Link para voltar à página de login -->
                         </div>
                     </div> 
                 </div> 

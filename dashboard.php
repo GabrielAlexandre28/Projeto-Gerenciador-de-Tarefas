@@ -37,16 +37,25 @@ $stmt->close(); // Fecha a consulta.
 
 // Atualizar status de tarefas atrasadas
 foreach ($tasks as $index => $task) {
-    $dataPrazo = new DateTime($task['data_prazo']); // Converte a data de prazo para um objeto DateTime.
-    $dataAtual = new DateTime(); // Obtém a data e hora atual.
+    $timezone = new DateTimeZone('America/Sao_Paulo'); // Define o fuso horário conforme necessário.
+    $dataPrazo = new DateTime($task['data_prazo'], $timezone); // Cria um objeto DateTime para a data de prazo com o fuso horário específico.
+    $dataAtual = new DateTime('now', $timezone); // Cria um objeto DateTime para a data e hora atual com o fuso horário específico.
+
+    // Adiciona 24 horas ao prazo final para ajustar a verificação de atraso.
+    $dataPrazo->modify('+1 day'); 
+
+    // Verifica se a data de prazo ajustada é menor que a data atual e o status não é 'concluída'.
     if ($dataPrazo < $dataAtual && $task['status'] !== 'concluida') {
         $tasks[$index]['status'] = 'Atrasada'; // Atualiza o status da tarefa para 'Atrasada'.
-        $stmtUpdate = $conn->prepare("UPDATE tarefas SET status = 'Atrasada' WHERE id = ?"); // Prepara a consulta de atualização do status.
-        $stmtUpdate->bind_param("i", $task['id']); // Liga o ID da tarefa à consulta.
+        
+        // Prepara a consulta de atualização do status da tarefa no banco de dados.
+        $stmtUpdate = $conn->prepare("UPDATE tarefas SET status = 'Atrasada' WHERE id = ?");
+        $stmtUpdate->bind_param("i", $task['id']); // Associa o ID da tarefa à consulta.
         $stmtUpdate->execute(); // Executa a consulta de atualização.
-        $stmtUpdate->close(); // Fecha a consulta de atualização.
+        $stmtUpdate->close(); // Fecha a consulta para liberar recursos.
     }
 }
+
 
 $stmtUsers = $conn->prepare("(
     SELECT NULL as id, NULL as nome

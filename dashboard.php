@@ -8,7 +8,7 @@ if (!isset($_SESSION['id'])) {
 
 include_once 'bd.php'; // Inclui o arquivo de conexão com o banco de dados.
 
-$nome = $_SESSION['nome']; // Armazena o nome do usuário da sessão na variável $userName.
+$nome = $_SESSION['nome']; // Armazena o nome do usuário da sessão na variável $nome.
 
 // Consultar todas as tarefas
 $stmt = $conn->prepare("SELECT t.id, t.titulo, t.descricao, t.data_prazo, t.status, u.nome AS usuario_nome 
@@ -56,7 +56,7 @@ foreach ($tasks as $index => $task) {
     }
 }
 
-
+//Usuários para Dropdown
 $stmtUsers = $conn->prepare("(
     SELECT NULL as id, NULL as nome
     UNION

@@ -1,9 +1,6 @@
 <?php
 session_start(); // Inicia a sessão PHP
 
-ini_set('display_errors', 1); // Configura o PHP para exibir todos os erros
-error_reporting(E_ALL); // Define o nível de relatório de erro para exibir todos os tipos de erro
-
 include_once 'bd.php'; // Inclui o arquivo com as configurações de conexão com o banco de dados
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Verifica se a requisição é do tipo POST

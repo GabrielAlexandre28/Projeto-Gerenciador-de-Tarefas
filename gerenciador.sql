@@ -33,8 +33,7 @@ CREATE TABLE `tarefas` (
   `descricao` text DEFAULT NULL,
   `STATUS` enum('pendente','em_progresso','concluida') DEFAULT 'pendente',
   `data_prazo` timestamp NOT NULL DEFAULT current_timestamp(),
-  `id_usuario` int(11) DEFAULT NULL,
-  `id_projeto` int(11) DEFAULT NULL
+  `id_usuario` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
